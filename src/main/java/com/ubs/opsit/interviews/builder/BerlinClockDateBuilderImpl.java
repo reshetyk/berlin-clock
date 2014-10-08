@@ -1,4 +1,4 @@
-package com.ubs.opsit.interviews.utils;
+package com.ubs.opsit.interviews.builder;
 
 import com.ubs.opsit.interviews.domain.BerlinClock;
 import org.joda.time.DateTime;
@@ -10,35 +10,20 @@ import static com.ubs.opsit.interviews.domain.BerlinClockLight.State;
 /**
  * Created by Alexey on 07.10.2014.
  */
-public class DateToBerlinClockConverter {
+public class BerlinClockDateBuilderImpl implements BerlinClockDateBuilder {
 
-    private final BerlinClock berlinClock;
-
+    private BerlinClock berlinClock;
     private int seconds;
     private int minutes;
     private int hours;
 
-    public DateToBerlinClockConverter(Date date) {
-        this(date, new BerlinClock());
-    }
-
-    public DateToBerlinClockConverter(Date date, BerlinClock berlinClock) {
-        this.berlinClock = berlinClock;
+    @Override
+    public BerlinClock buildByDate(Date date) {
+        this.berlinClock = new BerlinClock();
         parseDate(date);
-    }
-
-    private void parseDate(Date date) {
-        DateTime dateTime = new DateTime(date);
-        this.seconds = dateTime.getSecondOfMinute();
-        this.minutes = dateTime.getMinuteOfHour();
-        this.hours = dateTime.getMinuteOfHour();
-    }
-
-    public BerlinClock convert() {
         setUpSecondLight();
         setUpTopHoursLights();
         return berlinClock;
-
     }
 
     protected void setUpSecondLight() {
@@ -56,5 +41,13 @@ public class DateToBerlinClockConverter {
     private int defineCountTopLights(int number) {
         return (number - (number % 5)) / 5;
     }
+
+    private void parseDate(Date date) {
+        DateTime dateTime = new DateTime(date);
+        this.seconds = dateTime.getSecondOfMinute();
+        this.minutes = dateTime.getMinuteOfHour();
+        this.hours = dateTime.getMinuteOfHour();
+    }
+
     //...
 }

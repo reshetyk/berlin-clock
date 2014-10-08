@@ -1,6 +1,8 @@
 package com.ubs.opsit.interviews.domain;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static com.ubs.opsit.interviews.domain.BerlinClockLight.State;
 
@@ -9,22 +11,16 @@ import static com.ubs.opsit.interviews.domain.BerlinClockLight.State;
  */
 public class BerlinClock {
     //TODO: magic numbers
-    BerlinClockLight secondLight = new BerlinClockLight(State.OFF);
-    BerlinClockLight[] topHoursLights = new BerlinClockLight[4];
-    BerlinClockLight[] bottomHoursLights = new BerlinClockLight[4];
-    BerlinClockLight[] topMinutesLights = new BerlinClockLight[11];
-    BerlinClockLight[] bottomMinutesLights = new BerlinClockLight[4];
+    private final BerlinClockLight secondLight = new BerlinClockLight(State.OFF);
+    private final BerlinClockLight[] topHoursLights = createAndInitArray(4, State.OFF);
+    private final BerlinClockLight[] bottomHoursLights = createAndInitArray(4, State.OFF);
+    private final BerlinClockLight[] topMinutesLights = createAndInitArray(11, State.OFF);
+    private final BerlinClockLight[] bottomMinutesLights = createAndInitArray(4, State.OFF);
 
-    public BerlinClock() {
-        adjustLightStates();
-    }
-
-    private void adjustLightStates() {
-        //TODO: duplicate code
-        Arrays.fill(topHoursLights, new BerlinClockLight(State.OFF));
-        Arrays.fill(bottomHoursLights, new BerlinClockLight(State.OFF));
-        Arrays.fill(topMinutesLights, new BerlinClockLight(State.OFF));
-        Arrays.fill(bottomMinutesLights, new BerlinClockLight(State.OFF));
+    private static BerlinClockLight[] createAndInitArray(int size, State state) {
+        final BerlinClockLight[] result = new BerlinClockLight[size];
+        Arrays.fill(result, new BerlinClockLight(state));
+        return result;
     }
 
     public void setStateTopHoursLights(int count, State state) {
@@ -37,24 +33,35 @@ public class BerlinClock {
         secondLight.setState(state);
     }
 
-    public BerlinClockLight getSecondLight(){
+    public BerlinClockLight getSecondLight() {
         return secondLight;
     }
 
-    public BerlinClockLight[] getTopHoursLights() {
-        return topHoursLights;
+    public List<BerlinClockLight> getTopHoursLights() {
+        return Collections.unmodifiableList(Arrays.asList(topHoursLights));
     }
 
-    public BerlinClockLight[] getBottomHoursLights() {
-        return bottomHoursLights;
+    public List<BerlinClockLight> getBottomHoursLights() {
+        return Collections.unmodifiableList(Arrays.asList(bottomHoursLights));
     }
 
-    public BerlinClockLight[] getTopMinutesLights() {
-        return topMinutesLights;
+    public List<BerlinClockLight> getTopMinutesLights() {
+        return Collections.unmodifiableList(Arrays.asList(topMinutesLights));
     }
 
-    public BerlinClockLight[] getBottomMinutesLights() {
-        return bottomMinutesLights;
+    public List<BerlinClockLight> getBottomMinutesLights() {
+        return Collections.unmodifiableList(Arrays.asList(bottomMinutesLights));
+    }
+
+    @Override
+    public String toString() {
+        return "BerlinClock{" +
+                "secondLight=" + secondLight +
+                ", topHoursLights=" + Arrays.toString(topHoursLights) +
+                ", bottomHoursLights=" + Arrays.toString(bottomHoursLights) +
+                ", topMinutesLights=" + Arrays.toString(topMinutesLights) +
+                ", bottomMinutesLights=" + Arrays.toString(bottomMinutesLights) +
+                '}';
     }
 }
 
