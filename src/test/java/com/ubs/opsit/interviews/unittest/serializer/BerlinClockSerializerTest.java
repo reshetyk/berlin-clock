@@ -34,6 +34,7 @@ public class BerlinClockSerializerTest {
         BerlinClock secondLightYellow = spy(new BerlinClock());
         when(secondLightYellow.getSecondLight()).thenReturn(new BerlinClockLight(State.YELLOW));
 
+        //TODO: check only seconds
         assertEquals("O\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(secondLightOff));
         assertEquals("Y\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(secondLightYellow));
 
@@ -49,7 +50,7 @@ public class BerlinClockSerializerTest {
 
         when(topHoursLightAllRed.getTopHoursLights()).thenReturn(berlinClockLights);
 
-
+        //TODO: check only top hours
         assertEquals("O\nRRRR\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(topHoursLightAllRed));
 
     }
