@@ -38,7 +38,7 @@ public class BerlinClock {
     private static BerlinClockLight[] createAndInitArray(int size, State state) {
         final BerlinClockLight[] result = new BerlinClockLight[size];
         for (int i = 0; i < result.length; i++) {
-            result[i] = new BerlinClockLight(State.OFF);
+            result[i] = new BerlinClockLight(state);
 
         }
         return result;
