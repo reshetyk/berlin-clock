@@ -22,4 +22,9 @@ public class BerlinClockLight {
     public State getState() {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.name();
+    }
 }

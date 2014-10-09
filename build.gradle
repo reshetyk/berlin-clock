@@ -24,7 +24,8 @@ idea.module {
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.7',
             'commons-lang:commons-lang:2.6',
-            'joda-time:joda-time:2.3'
+            'joda-time:joda-time:2.3',
+            'com.google.code.gson:gson:2.3'
 
     runtime 'org.slf4j:slf4j-log4j12:1.7.7',
             'log4j:log4j:1.2.17'

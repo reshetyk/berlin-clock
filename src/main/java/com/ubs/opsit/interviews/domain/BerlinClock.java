@@ -1,5 +1,6 @@
 package com.ubs.opsit.interviews.domain;
 
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -17,16 +18,33 @@ public class BerlinClock {
     private final BerlinClockLight[] topMinutesLights = createAndInitArray(11, State.OFF);
     private final BerlinClockLight[] bottomMinutesLights = createAndInitArray(4, State.OFF);
 
-    private static BerlinClockLight[] createAndInitArray(int size, State state) {
-        final BerlinClockLight[] result = new BerlinClockLight[size];
-        Arrays.fill(result, new BerlinClockLight(state));
-        return result;
+    public void setStateTopHourLightByIndex(int index, State state) {
+        setStageForLightByIndex(index, state, topHoursLights);
     }
 
-    public void setStateTopHoursLights(int count, State state) {
-        for (int i = 0; i < count; i++) {
-            topHoursLights[i].setState(state);
+    public void setStateBottomHoursLightsRange(int index, State state) {
+        setStageForLightByIndex(index, state, bottomHoursLights);
+    }
+
+    public void setStateTopMinutesLightByIndex(int index, State state) {
+        setStageForLightByIndex(index, state, topMinutesLights);
+    }
+
+    public void setStateBottomMinutesLightByIndex(int index, State state) {
+        setStageForLightByIndex(index, state, bottomMinutesLights);
+    }
+    public void setStageForLightByIndex(int index, State stage, BerlinClockLight[] lights){
+        //TODO: check index
+        lights[index].setState(stage);
+    }
+
+    private static BerlinClockLight[] createAndInitArray(int size, State state) {
+        final BerlinClockLight[] result = new BerlinClockLight[size];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = new BerlinClockLight(State.OFF);
+
         }
+        return result;
     }
 
     public void setStateSecondLight(State state) {
