@@ -1,7 +1,8 @@
-package com.ubs.opsit.interviews.serializer;
+package com.ubs.opsit.interviews.unittest.serializer;
 
 import com.ubs.opsit.interviews.domain.BerlinClock;
 import com.ubs.opsit.interviews.domain.BerlinClockLight;
+import com.ubs.opsit.interviews.serializer.BerlinClockSerializer;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializerImpl;
 import org.junit.Test;
 
@@ -16,10 +17,12 @@ import static org.mockito.Mockito.when;
 
 public class BerlinClockSerializerTest {
 
+    private final static BerlinClockSerializer berlinClockSerializer = new BerlinClockSerializerImpl();
+
     @Test
     public void serializeAsStringEmptyBerlinClock() throws Exception {
         BerlinClock emptyBerlinClock = new BerlinClock();
-        assertEquals("O\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", new BerlinClockSerializerImpl().serializeAsString(emptyBerlinClock));
+        assertEquals("O\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(emptyBerlinClock));
 
     }
 
@@ -31,8 +34,8 @@ public class BerlinClockSerializerTest {
         BerlinClock secondLightYellow = spy(new BerlinClock());
         when(secondLightYellow.getSecondLight()).thenReturn(new BerlinClockLight(State.YELLOW));
 
-        assertEquals("O\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", new BerlinClockSerializerImpl().serializeAsString(secondLightOff));
-        assertEquals("Y\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", new BerlinClockSerializerImpl().serializeAsString(secondLightYellow));
+        assertEquals("O\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(secondLightOff));
+        assertEquals("Y\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(secondLightYellow));
 
     }
 
@@ -47,7 +50,7 @@ public class BerlinClockSerializerTest {
         when(topHoursLightAllRed.getTopHoursLights()).thenReturn(berlinClockLights);
 
 
-        assertEquals("O\nRRRR\nOOOO\nOOOOOOOOOOO\nOOOO", new BerlinClockSerializerImpl().serializeAsString(topHoursLightAllRed));
+        assertEquals("O\nRRRR\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(topHoursLightAllRed));
 
     }
 

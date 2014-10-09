@@ -1,4 +1,4 @@
-package com.ubs.opsit.interviews.service;
+package com.ubs.opsit.interviews.unittest.service;
 
 import com.ubs.opsit.interviews.builder.BerlinClockDateBuilderImpl;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializerImpl;
@@ -6,6 +6,7 @@ import com.ubs.opsit.interviews.service.TimeConverter;
 import com.ubs.opsit.interviews.service.TimeConverterImpl;
 import com.ubs.opsit.interviews.service.exception.TimeConverterException;
 import com.ubs.opsit.interviews.utils.Utils;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class TimeConverterTest {
@@ -31,24 +32,28 @@ public class TimeConverterTest {
         TIME_CONVERTER.convertTime("0dds");
     }
 
-//    @Test
-//    public void secondLightShouldBlinkOnOffEveryTwoSeconds() {
-//        TimeConverter timeConverterMock = mock (TimeConverter.class);
-//        when(timeConverterMock.convertTime("16:17:10")).thenReturn("O\nRROO\nRRRO\nYYROOOOOOOO\nYYOO");
-//        when(timeConverterMock.convertTime("00:00:00")).then("O\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO");
-//
-//        Assert.assertEquals("YELLOW", berlinClock.getSeconds(0));
-//        Assert.assertEquals("O", berlinClock.getSeconds(1));
-//        Assert.assertEquals("O", berlinClock.getSeconds(59));
-//    }
+    @Test
+    public void convertTime() throws Exception {
 
-//    @Test
-//    public void convertTimeInput() throws Exception {
-//        Assert.assertEquals("YELLOW\n" +
-//                "OOOO\n" +
-//                "OOOO\n" +
-//                "OOOOOOOOOOO\n" +
-//                "OOOO", TIME_CONVERTER.convertTime("15:23:50"));
-//    }
+        Assert.assertEquals(
+                "Y\n"+ "OOOO\n" + "OOOO\n" + "OOOOOOOOOOO\n" + "OOOO",
+                TIME_CONVERTER.convertTime("00:00:00")
+        );
+
+        Assert.assertEquals(
+                "O\n"+ "RRRO\n" + "OOOO\n" + "YYOOOOOOOOO\n" + "YYYY",
+                TIME_CONVERTER.convertTime("15:14:05")
+        );
+
+        Assert.assertEquals(
+                "O\n"+ "RRRR\n" + "RRRO\n" + "YYRYYRYYRYY\n" + "YYYY",
+                TIME_CONVERTER.convertTime("23:59:59")
+        );
+
+        Assert.assertEquals(
+                "Y\n"+ "RRRR\n" + "RRRR\n" + "OOOOOOOOOOO\n" + "OOOO",
+                TIME_CONVERTER.convertTime("24:00:00")
+        );
+    }
 }
 

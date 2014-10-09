@@ -1,8 +1,5 @@
 package com.ubs.opsit.interviews.domain;
 
-/**
- * Created by Alexey on 07.10.2014.
- */
 public class BerlinClockLight {
     public enum State {
         RED, YELLOW, OFF

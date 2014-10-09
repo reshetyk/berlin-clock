@@ -4,9 +4,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-/**
- * Created by Alexey on 08.10.2014.
- */
 public class Utils {
     //TODO: maybe make Config singleton class
     public static String getConfigProperty(String propertyName) {

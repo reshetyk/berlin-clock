@@ -1,6 +1,7 @@
-package com.ubs.opsit.interviews.builder;
+package com.ubs.opsit.interviews.unittest.builder;
 
 import com.google.gson.Gson;
+import com.ubs.opsit.interviews.builder.BerlinClockDateBuilderImpl;
 import com.ubs.opsit.interviews.domain.BerlinClock;
 import com.ubs.opsit.interviews.domain.BerlinClockLight;
 import org.joda.time.format.DateTimeFormat;
@@ -25,10 +26,10 @@ public class BerlinClockDateBuilderTest {
      */
     @Test
     public void secondLightOnOffEveryTwoSeconds() throws Exception {
-        assertEquals(OFF, buildBerlinClock("00:00:00").getSecondLight().getState());
-        assertEquals(YELLOW, buildBerlinClock("00:00:01").getSecondLight().getState());
-        assertEquals(OFF, buildBerlinClock("00:00:02").getSecondLight().getState());
-        assertEquals(YELLOW, buildBerlinClock("00:00:03").getSecondLight().getState());
+        assertEquals(YELLOW, buildBerlinClock("00:00:00").getSecondLight().getState());
+        assertEquals(OFF, buildBerlinClock("00:00:01").getSecondLight().getState());
+        assertEquals(YELLOW, buildBerlinClock("00:00:02").getSecondLight().getState());
+        assertEquals(OFF, buildBerlinClock("00:00:03").getSecondLight().getState());
     }
 
     /**
@@ -161,19 +162,19 @@ public class BerlinClockDateBuilderTest {
     @Test
     public void bottomMinuteLightsRepresentsOneMinute() throws Exception {
         assertEquals(
-                toJson(makeLightsByEnum(RED, RED, RED, RED)),
+                toJson(makeLightsByEnum(YELLOW, YELLOW, YELLOW, YELLOW)),
                 toJson(buildBerlinClock("00:04:00").getBottomMinutesLights())
         );
         assertEquals(
-                toJson(makeLightsByEnum(RED, RED, RED, OFF)),
+                toJson(makeLightsByEnum(YELLOW, YELLOW, YELLOW, OFF)),
                 toJson(buildBerlinClock("00:03:00").getBottomMinutesLights())
         );
         assertEquals(
-                toJson(makeLightsByEnum(RED, RED, OFF, OFF)),
+                toJson(makeLightsByEnum(YELLOW, YELLOW, OFF, OFF)),
                 toJson(buildBerlinClock("00:02:00").getBottomMinutesLights())
         );
         assertEquals(
-                toJson(makeLightsByEnum(RED, OFF, OFF, OFF)),
+                toJson(makeLightsByEnum(YELLOW, OFF, OFF, OFF)),
                 toJson(buildBerlinClock("00:06:00").getBottomMinutesLights())
         );
     }

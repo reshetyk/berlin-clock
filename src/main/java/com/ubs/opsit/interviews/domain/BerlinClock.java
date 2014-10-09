@@ -7,9 +7,6 @@ import java.util.List;
 
 import static com.ubs.opsit.interviews.domain.BerlinClockLight.State;
 
-/**
- * Created by Alexey on 07.10.2014.
- */
 public class BerlinClock {
     //TODO: magic numbers
     private final BerlinClockLight secondLight = new BerlinClockLight(State.OFF);

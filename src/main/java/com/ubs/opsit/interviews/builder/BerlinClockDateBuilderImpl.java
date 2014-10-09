@@ -7,9 +7,6 @@ import java.util.Date;
 
 import static com.ubs.opsit.interviews.domain.BerlinClockLight.State;
 
-/**
- * Created by Alexey on 07.10.2014.
- */
 public class BerlinClockDateBuilderImpl implements BerlinClockDateBuilder {
 
     private BerlinClock berlinClock;
@@ -31,9 +28,9 @@ public class BerlinClockDateBuilderImpl implements BerlinClockDateBuilder {
 
     protected void setUpSecondLight() {
         if (seconds % 2 == 0) {
-            berlinClock.setStateSecondLight(State.OFF);
-        } else {
             berlinClock.setStateSecondLight(State.YELLOW);
+        } else {
+            berlinClock.setStateSecondLight(State.OFF);
         }
     }
 
@@ -57,7 +54,7 @@ public class BerlinClockDateBuilderImpl implements BerlinClockDateBuilder {
 
     protected void setUpBottomMinutesLights() {
         for (int i = 0; i < countEnabledBottomLights(minutes); i++) {
-            berlinClock.setStateBottomMinutesLightByIndex(i, State.RED);
+            berlinClock.setStateBottomMinutesLightByIndex(i, State.YELLOW);
         }
     }
 
@@ -74,6 +71,4 @@ public class BerlinClockDateBuilderImpl implements BerlinClockDateBuilder {
         this.minutes = dateTime.getMinuteOfHour();
         this.hours = dateTime.getHourOfDay();
     }
-
-    //...
 }

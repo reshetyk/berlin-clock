@@ -6,9 +6,6 @@ import com.ubs.opsit.interviews.domain.BerlinClockLight;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by Alexey on 07.10.2014.
- */
 public class BerlinClockSerializerImpl implements BerlinClockSerializer {
 
     @Override
@@ -23,19 +20,25 @@ public class BerlinClockSerializerImpl implements BerlinClockSerializer {
         return sb.toString().trim();
     }
 
-    protected void serializeLights (List<BerlinClockLight> lights, StringBuilder sb) {
+    protected void serializeLights(List<BerlinClockLight> lights, StringBuilder sb) {
         for (BerlinClockLight light : lights) {
             sb.append(representState(light.getState()));
         }
         sb.append('\n');
     }
 
-    protected String representState (BerlinClockLight.State state) {
+    protected String representState(BerlinClockLight.State state) {
         //TODO: should be obtained from config file
-        if (state == BerlinClockLight.State.YELLOW) return "Y";
-        if (state == BerlinClockLight.State.RED) return "R";
-        if (state == BerlinClockLight.State.OFF) return "O";
-        throw new RuntimeException("Cannot represent state " + state.name());
+        switch (state) {
+            case YELLOW:
+                return "Y";
+            case RED:
+                return "R";
+            case OFF:
+                return "O";
+            default:
+                throw new RuntimeException("Cannot represent state " + state.name());
+        }
     }
 
 }

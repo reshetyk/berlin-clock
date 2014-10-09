@@ -10,9 +10,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Date;
 
-/**
- * Created by Alexey on 07.10.2014.
- */
 public class TimeConverterImpl implements TimeConverter {
     private final String inputTimeFormat;
     private final BerlinClockDateBuilder berlinClockDateBuilder;
