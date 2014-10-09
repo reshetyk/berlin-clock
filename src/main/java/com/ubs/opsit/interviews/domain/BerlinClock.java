@@ -8,7 +8,7 @@ import java.util.List;
 import static com.ubs.opsit.interviews.domain.BerlinClockLight.State;
 
 public class BerlinClock {
-    //TODO: magic numbers
+    //TODO: numbers replace on constants
     private final BerlinClockLight secondLight = new BerlinClockLight(State.OFF);
     private final BerlinClockLight[] topHoursLights = createAndInitArray(4, State.OFF);
     private final BerlinClockLight[] bottomHoursLights = createAndInitArray(4, State.OFF);
