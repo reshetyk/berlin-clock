@@ -6,6 +6,7 @@ import com.ubs.opsit.interviews.domain.BerlinClock;
 import com.ubs.opsit.interviews.domain.BerlinClockLight;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import static com.ubs.opsit.interviews.domain.BerlinClockLight.State.*;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 public class BerlinClockDateBuilderTest {
 
@@ -179,8 +181,8 @@ public class BerlinClockDateBuilderTest {
         );
     }
 
-/*
     @Test
+    @Ignore
     public void allLightsInBerlinClockSetUpCorrect() throws Exception {
         final BerlinClock actual = buildBerlinClock("11:02:12");
         final BerlinClock expected = new BerlinClock();
@@ -191,20 +193,11 @@ public class BerlinClockDateBuilderTest {
         when(expected.getTopMinutesLights()).thenReturn(makeLightsByEnum(OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF));
         when(expected.getBottomMinutesLights()).thenReturn(makeLightsByEnum(RED, RED, OFF, OFF));
 
-
-        assertEquals(expected, actual);
+        //TODO: figure out how to serialize spy object to json or how to equals these objects correctly
+        //assertEquals(toJson(expected), toJson(actual));
     }
-*/
 
-/*    @Test
-    public void allLightsOffIfNotBuilt() throws Exception {
-        assertEquals(
-                toJson(makeLightsByEnum(RED, RED, RED, RED)),
-                toJson(buildBerlinClock("00:04:00").getBottomMinutesLights())
-        );
-
-    }*/
-
+    //TODO: maybe extract functions below to TestUtils or TestHelper class
     private static List<BerlinClockLight> makeLightsByEnum(BerlinClockLight.State... states) {
         final List<BerlinClockLight> result = new ArrayList<BerlinClockLight>(states.length);
         for (int i = 0; i < states.length; i++) {
