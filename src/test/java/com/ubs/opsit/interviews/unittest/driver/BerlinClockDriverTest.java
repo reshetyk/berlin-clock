@@ -1,12 +1,12 @@
-package com.ubs.opsit.interviews.unittest.builder;
+package com.ubs.opsit.interviews.unittest.driver;
 
 import com.google.gson.Gson;
-import com.ubs.opsit.interviews.driver.BerlinClockDriverImpl;
 import com.ubs.opsit.interviews.domain.BerlinClockDevice;
 import com.ubs.opsit.interviews.domain.BerlinClockLight;
+import com.ubs.opsit.interviews.driver.BerlinClockDriverImpl;
 import com.ubs.opsit.interviews.parser.DateParser;
 import com.ubs.opsit.interviews.parser.DateParserImpl;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,14 +14,21 @@ import java.util.List;
 
 import static com.ubs.opsit.interviews.domain.BerlinClockLight.State.*;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 
-public class BerlinClockDeviceDateBuilderTest {
+public class BerlinClockDriverTest {
 
-    final static String FORMAT = "HH:mm:ss";
-    final static BerlinClockDriverImpl DRIVER = new BerlinClockDriverImpl();
-    final static DateParser DATE_PARSER = new DateParserImpl();
-    final static BerlinClockDevice BERLIN_CLOCK_DEVICE = new BerlinClockDevice();
+    final static String FORMAT_INPUT_TIME = "HH:mm:ss";
+
+    BerlinClockDriverImpl driver;
+    DateParser dateParser;
+    BerlinClockDevice clockDevice;
+
+    @Before
+    public void setUp() throws Exception {
+        clockDevice = new BerlinClockDevice();
+        driver = new BerlinClockDriverImpl();
+        dateParser = new DateParserImpl();
+    }
 
     /**
      * Check that on the top of the clock there is a yellow lamp that blinks on/off every two seconds
@@ -30,10 +37,17 @@ public class BerlinClockDeviceDateBuilderTest {
      */
     @Test
     public void secondLightOnOffEveryTwoSeconds() throws Exception {
-        assertEquals(YELLOW, setUpBerlinClockTime("00:00:00").getSecondLight().getState());
-        assertEquals(OFF, setUpBerlinClockTime("00:00:01").getState());
-        assertEquals(YELLOW, setUpBerlinClockTime("00:00:02").getSecondLight().getState());
-        assertEquals(OFF, setUpBerlinClockTime("00:00:03").getSecondLight().getState());
+        setBerlinClockTime("00:00:00");
+        assertEquals(YELLOW, clockDevice.getSecondLight().getState());
+
+        setBerlinClockTime("00:00:01");
+        assertEquals(OFF, clockDevice.getSecondLight().getState());
+
+        setBerlinClockTime("00:00:02");
+        assertEquals(YELLOW, clockDevice.getSecondLight().getState());
+
+        setBerlinClockTime("00:00:03");
+        assertEquals(OFF, clockDevice.getSecondLight().getState());
     }
 
     /**
@@ -43,7 +57,7 @@ public class BerlinClockDeviceDateBuilderTest {
      */
     @Test
     public void topHoursLightsHaveFourLights() throws Exception {
-        assertEquals(4, new BerlinClockDevice().getTopHoursLights().size());
+        assertEquals(4, clockDevice.getTopHoursLights().size());
     }
 
     /**
@@ -53,9 +67,10 @@ public class BerlinClockDeviceDateBuilderTest {
      */
     @Test
     public void allEnabledTopHourLightsAreRed() throws Exception {
+        setBerlinClockTime("20:00:00");
         assertEquals(
                 toJson(makeLightsByEnum(RED, RED, RED, RED)),
-                toJson(setUpBerlinClockTime("20:00:00").getTopHoursLights())
+                toJson(clockDevice.getTopHoursLights())
         );
     }
 
@@ -66,21 +81,28 @@ public class BerlinClockDeviceDateBuilderTest {
      */
     @Test
     public void topHourLightsRepresentFiveHours() throws Exception {
+        setBerlinClockTime("05:00:00");
         assertEquals(
                 toJson(makeLightsByEnum(RED, OFF, OFF, OFF)),
-                toJson(setUpBerlinClockTime("05:00:00").getTopHoursLights())
+                toJson(clockDevice.getTopHoursLights())
         );
+
+        setBerlinClockTime("12:00:00");
         assertEquals(
                 toJson(makeLightsByEnum(RED, RED, OFF, OFF)),
-                toJson(setUpBerlinClockTime("12:00:00").getTopHoursLights())
+                toJson(clockDevice.getTopHoursLights())
         );
+
+        setBerlinClockTime("16:00:00");
         assertEquals(
                 toJson(makeLightsByEnum(RED, RED, RED, OFF)),
-                toJson(setUpBerlinClockTime("16:00:00").getTopHoursLights())
+                toJson(clockDevice.getTopHoursLights())
         );
+
+        setBerlinClockTime("23:00:00");
         assertEquals(
                 toJson(makeLightsByEnum(RED, RED, RED, RED)),
-                toJson(setUpBerlinClockTime("23:00:00").getTopHoursLights())
+                toJson(clockDevice.getTopHoursLights())
         );
     }
 
@@ -93,21 +115,28 @@ public class BerlinClockDeviceDateBuilderTest {
      */
     @Test
     public void bottomHourLightsRepresentOneHour() throws Exception {
+        setBerlinClockTime("13:00:00");
         assertEquals(
                 toJson(makeLightsByEnum(RED, RED, RED, OFF)),
-                toJson(setUpBerlinClockTime("13:00:00").getBottomHoursLights())
+                toJson(clockDevice.getBottomHoursLights())
         );
+
+        setBerlinClockTime("14:00:00");
         assertEquals(
                 toJson(makeLightsByEnum(RED, RED, RED, RED)),
-                toJson(setUpBerlinClockTime("14:00:00").getBottomHoursLights())
+                toJson(clockDevice.getBottomHoursLights())
         );
+
+        setBerlinClockTime("12:00:00");
         assertEquals(
                 toJson(makeLightsByEnum(RED, RED, OFF, OFF)),
-                toJson(setUpBerlinClockTime("12:00:00").getBottomHoursLights())
+                toJson(clockDevice.getBottomHoursLights())
         );
+
+        setBerlinClockTime("10:00:00");
         assertEquals(
                 toJson(makeLightsByEnum(OFF, OFF, OFF, OFF)),
-                toJson(setUpBerlinClockTime("10:00:00").getBottomHoursLights())
+                toJson(clockDevice.getBottomHoursLights())
         );
     }
 
@@ -118,7 +147,7 @@ public class BerlinClockDeviceDateBuilderTest {
      */
     @Test
     public void topMinutesHaveElevenLights() throws Exception {
-        assertEquals(11, new BerlinClockDevice().getTopMinutesLights().size());
+        assertEquals(11, clockDevice.getTopMinutesLights().size());
     }
 
     /**
@@ -130,21 +159,28 @@ public class BerlinClockDeviceDateBuilderTest {
      */
     @Test
     public void topMinuteLightsRepresentFiveMinute() throws Exception {
+        setBerlinClockTime("00:45:00");
         assertEquals(
                 toJson(makeLightsByEnum(YELLOW, YELLOW, RED, YELLOW, YELLOW, RED, YELLOW, YELLOW, RED, OFF, OFF)),
-                toJson(setUpBerlinClockTime("00:45:00").getTopMinutesLights())
+                toJson(clockDevice.getTopMinutesLights())
         );
+
+        setBerlinClockTime("00:56:00");
         assertEquals(
                 toJson(makeLightsByEnum(YELLOW, YELLOW, RED, YELLOW, YELLOW, RED, YELLOW, YELLOW, RED, YELLOW, YELLOW)),
-                toJson(setUpBerlinClockTime("00:56:00").getTopMinutesLights())
+                toJson(clockDevice.getTopMinutesLights())
         );
+
+        setBerlinClockTime("00:11:00");
         assertEquals(
                 toJson(makeLightsByEnum(YELLOW, YELLOW, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF)),
-                toJson(setUpBerlinClockTime("00:11:00").getTopMinutesLights())
+                toJson(clockDevice.getTopMinutesLights())
         );
+
+        setBerlinClockTime("00:20:00");
         assertEquals(
                 toJson(makeLightsByEnum(YELLOW, YELLOW, RED, YELLOW, OFF, OFF, OFF, OFF, OFF, OFF, OFF)),
-                toJson(setUpBerlinClockTime("00:20:00").getTopMinutesLights())
+                toJson(clockDevice.getTopMinutesLights())
         );
     }
 
@@ -155,7 +191,7 @@ public class BerlinClockDeviceDateBuilderTest {
      */
     @Test
     public void bottomMinutesHaveFourLights() throws Exception {
-        assertEquals(4, new BerlinClockDevice().getBottomMinutesLights().size());
+        assertEquals(4, clockDevice.getBottomMinutesLights().size());
     }
 
     /**
@@ -165,38 +201,29 @@ public class BerlinClockDeviceDateBuilderTest {
      */
     @Test
     public void bottomMinuteLightsRepresentsOneMinute() throws Exception {
+        setBerlinClockTime("00:04:00");
         assertEquals(
                 toJson(makeLightsByEnum(YELLOW, YELLOW, YELLOW, YELLOW)),
-                toJson(setUpBerlinClockTime("00:04:00").getBottomMinutesLights())
+                toJson(clockDevice.getBottomMinutesLights())
         );
+
+        setBerlinClockTime("00:03:00");
         assertEquals(
                 toJson(makeLightsByEnum(YELLOW, YELLOW, YELLOW, OFF)),
-                toJson(setUpBerlinClockTime("00:03:00").getBottomMinutesLights())
+                toJson(clockDevice.getBottomMinutesLights())
         );
+
+        setBerlinClockTime("00:02:00");
         assertEquals(
                 toJson(makeLightsByEnum(YELLOW, YELLOW, OFF, OFF)),
-                toJson(setUpBerlinClockTime("00:02:00").getBottomMinutesLights())
+                toJson(clockDevice.getBottomMinutesLights())
         );
+
+        setBerlinClockTime("00:06:00");
         assertEquals(
                 toJson(makeLightsByEnum(YELLOW, OFF, OFF, OFF)),
-                toJson(setUpBerlinClockTime("00:06:00").getBottomMinutesLights())
+                toJson(clockDevice.getBottomMinutesLights())
         );
-    }
-
-    @Test
-    @Ignore
-    public void allLightsInBerlinClockSetUpCorrect() throws Exception {
-        final BerlinClockDevice actual = setUpBerlinClockTime("11:02:12");
-        final BerlinClockDevice expected = new BerlinClockDevice();
-
-        when(expected.getSecondLight()).thenReturn(new BerlinClockLight(OFF));
-        when(expected.getTopHoursLights()).thenReturn(makeLightsByEnum(RED, RED, OFF, OFF));
-        when(expected.getBottomHoursLights()).thenReturn(makeLightsByEnum(RED, OFF, OFF, OFF));
-        when(expected.getTopMinutesLights()).thenReturn(makeLightsByEnum(OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF, OFF));
-        when(expected.getBottomMinutesLights()).thenReturn(makeLightsByEnum(RED, RED, OFF, OFF));
-
-        //TODO: figure out how to serialize spy object to json or how to equals these objects correctly
-        //assertEquals(toJson(expected), toJson(actual));
     }
 
     //TODO: maybe extract functions below to TestUtils or TestHelper class
@@ -208,12 +235,12 @@ public class BerlinClockDeviceDateBuilderTest {
         return result;
     }
 
-    private static void setUpBerlinClockTime(String sDate) {
-        DRIVER.setTimeOnBerlinClockDevice(BERLIN_CLOCK_DEVICE, DATE_PARSER.parseAsBerlinTime(sDate, FORMAT));
-    }
-
     private static String toJson(Object obj) {
         Gson gson = new Gson();
         return gson.toJson(obj);
+    }
+
+    private void setBerlinClockTime(String sDate) {
+        driver.setTimeOnBerlinClockDevice(clockDevice, dateParser.parseAsBerlinTime(sDate, FORMAT_INPUT_TIME));
     }
 }

@@ -19,7 +19,7 @@ public class BerlinClockDevice {
         setStageForLightByIndex(index, state, topHoursLights);
     }
 
-    public void setStateBottomHoursLightsRange(int index, State state) {
+    public void setStateBottomHoursLightsByIndex(int index, State state) {
         setStageForLightByIndex(index, state, bottomHoursLights);
     }
 
@@ -30,7 +30,8 @@ public class BerlinClockDevice {
     public void setStateBottomMinutesLightByIndex(int index, State state) {
         setStageForLightByIndex(index, state, bottomMinutesLights);
     }
-    public void setStageForLightByIndex(int index, State stage, BerlinClockLight[] lights){
+
+    private void setStageForLightByIndex(int index, State stage, BerlinClockLight[] lights){
         //TODO: check index
         lights[index].setState(stage);
     }

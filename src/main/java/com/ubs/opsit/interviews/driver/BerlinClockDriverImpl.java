@@ -9,11 +9,30 @@ public class BerlinClockDriverImpl implements BerlinClockDriver {
 
     @Override
     public void setTimeOnBerlinClockDevice(BerlinClockDevice berlinClockDevice, BerlinTime berlinTime) {
+        resetClock(berlinClockDevice);
         setUpSecondLight(berlinTime, berlinClockDevice);
         setUpTopHoursLights(berlinTime, berlinClockDevice);
         setUpBottomHoursLights(berlinTime, berlinClockDevice);
         setUpTopMinutesLights(berlinTime, berlinClockDevice);
         setUpBottomMinutesLights(berlinTime, berlinClockDevice);
+    }
+
+    protected static void resetClock(BerlinClockDevice berlinClockDevice) {
+        berlinClockDevice.setStateSecondLight(State.OFF);
+        //TODO: find the way to do it easier
+        for (int i = 0; berlinClockDevice.getTopHoursLights().size() > i; i++) {
+            berlinClockDevice.setStateTopHourLightByIndex(i, State.OFF);
+        }
+        for (int i = 0; berlinClockDevice.getBottomHoursLights().size() > i; i++) {
+            berlinClockDevice.setStateBottomHoursLightsByIndex(i, State.OFF);
+        }
+        for (int i = 0; berlinClockDevice.getTopMinutesLights().size() > i; i++) {
+            berlinClockDevice.setStateTopMinutesLightByIndex(i, State.OFF);
+        }
+        for (int i = 0; berlinClockDevice.getBottomMinutesLights().size() > i; i++) {
+            berlinClockDevice.setStateBottomMinutesLightByIndex(i, State.OFF);
+        }
+
     }
 
     protected static void setUpSecondLight(BerlinTime berlinTime, BerlinClockDevice berlinClockDevice) {
@@ -32,7 +51,7 @@ public class BerlinClockDriverImpl implements BerlinClockDriver {
 
     protected static void setUpBottomHoursLights(BerlinTime berlinTime, BerlinClockDevice berlinClockDevice) {
         for (int i = 0; i < countEnabledBottomLights(berlinTime.getHours()); i++) {
-            berlinClockDevice.setStateBottomHoursLightsRange(i, State.RED);
+            berlinClockDevice.setStateBottomHoursLightsByIndex(i, State.RED);
         }
     }
 
