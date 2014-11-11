@@ -2,11 +2,23 @@ package com.ubs.opsit.interviews.serializer;
 
 import com.ubs.opsit.interviews.domain.BerlinClockDevice;
 import com.ubs.opsit.interviews.domain.BerlinClockLight;
+import com.ubs.opsit.interviews.utils.Utils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class BerlinClockSerializerImpl implements BerlinClockSerializer {
+
+    private Map<BerlinClockLight.State, String> representationMap;
+
+    public BerlinClockSerializerImpl() {
+        this.representationMap = Utils.buildRepresentationMap();
+    }
+
+    public BerlinClockSerializerImpl(Map<BerlinClockLight.State, String> representationMap) {
+        this.representationMap = representationMap;
+    }
 
     @Override
     public String serializeAsString(BerlinClockDevice berlinClockDevice) {
@@ -28,17 +40,11 @@ public class BerlinClockSerializerImpl implements BerlinClockSerializer {
     }
 
     protected String representState(BerlinClockLight.State state) {
-        //TODO: should be obtained from config file
-        switch (state) {
-            case YELLOW:
-                return "Y";
-            case RED:
-                return "R";
-            case OFF:
-                return "O";
-            default:
-                throw new RuntimeException("Cannot represent state " + state.name());
+        final String representation = representationMap.get(state);
+        if (representation == null) {
+            throw new RuntimeException("Cannot represent state " + state.name());
         }
+        return representation ;
     }
 
 }
