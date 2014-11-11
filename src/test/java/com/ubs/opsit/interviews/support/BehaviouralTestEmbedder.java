@@ -21,7 +21,7 @@ import static org.jbehave.core.reporters.Format.HTML;
 import static org.junit.Assert.assertThat;
 
 /**
- * A class to fully encapsulates all of the JBehave plumbing behind a builder style API.  The expected use for this would be:
+ * A class to fully encapsulates all of the JBehave plumbing behind a driver style API.  The expected use for this would be:
  * {code}aBehaviouralTestRunner().usingStepsFrom(this).withStory("your.story").run(){code}
  *
  */

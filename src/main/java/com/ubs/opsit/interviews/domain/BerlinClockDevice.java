@@ -7,13 +7,13 @@ import java.util.List;
 
 import static com.ubs.opsit.interviews.domain.BerlinClockLight.State;
 
-public class BerlinClock {
+public class BerlinClockDevice {
     //TODO: numbers replace on constants
     private final BerlinClockLight secondLight = new BerlinClockLight(State.OFF);
-    private final BerlinClockLight[] topHoursLights = createAndInitArray(4, State.OFF);
-    private final BerlinClockLight[] bottomHoursLights = createAndInitArray(4, State.OFF);
-    private final BerlinClockLight[] topMinutesLights = createAndInitArray(11, State.OFF);
-    private final BerlinClockLight[] bottomMinutesLights = createAndInitArray(4, State.OFF);
+    private final BerlinClockLight[] topHoursLights = createAndInitLights(4, State.OFF);
+    private final BerlinClockLight[] bottomHoursLights = createAndInitLights(4, State.OFF);
+    private final BerlinClockLight[] topMinutesLights = createAndInitLights(11, State.OFF);
+    private final BerlinClockLight[] bottomMinutesLights = createAndInitLights(4, State.OFF);
 
     public void setStateTopHourLightByIndex(int index, State state) {
         setStageForLightByIndex(index, state, topHoursLights);
@@ -33,15 +33,6 @@ public class BerlinClock {
     public void setStageForLightByIndex(int index, State stage, BerlinClockLight[] lights){
         //TODO: check index
         lights[index].setState(stage);
-    }
-
-    private static BerlinClockLight[] createAndInitArray(int size, State state) {
-        final BerlinClockLight[] result = new BerlinClockLight[size];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = new BerlinClockLight(state);
-
-        }
-        return result;
     }
 
     public void setStateSecondLight(State state) {
@@ -78,6 +69,16 @@ public class BerlinClock {
                 ", bottomMinutesLights=" + Arrays.toString(bottomMinutesLights) +
                 '}';
     }
+
+    private static BerlinClockLight[] createAndInitLights(int size, State state) {
+        final BerlinClockLight[] result = new BerlinClockLight[size];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = new BerlinClockLight(state);
+
+        }
+        return result;
+    }
+
 }
 
 

@@ -1,6 +1,6 @@
 package com.ubs.opsit.interviews.serializer;
 
-import com.ubs.opsit.interviews.domain.BerlinClock;
+import com.ubs.opsit.interviews.domain.BerlinClockDevice;
 import com.ubs.opsit.interviews.domain.BerlinClockLight;
 
 import java.util.Arrays;
@@ -9,13 +9,13 @@ import java.util.List;
 public class BerlinClockSerializerImpl implements BerlinClockSerializer {
 
     @Override
-    public String serializeAsString(BerlinClock berlinClock) {
+    public String serializeAsString(BerlinClockDevice berlinClockDevice) {
         StringBuilder sb = new StringBuilder();
-        serializeLights(Arrays.asList(berlinClock.getSecondLight()), sb);
-        serializeLights(berlinClock.getTopHoursLights(), sb);
-        serializeLights(berlinClock.getBottomHoursLights(), sb);
-        serializeLights(berlinClock.getTopMinutesLights(), sb);
-        serializeLights(berlinClock.getBottomMinutesLights(), sb);
+        serializeLights(Arrays.asList(berlinClockDevice.getSecondLight()), sb);
+        serializeLights(berlinClockDevice.getTopHoursLights(), sb);
+        serializeLights(berlinClockDevice.getBottomHoursLights(), sb);
+        serializeLights(berlinClockDevice.getTopMinutesLights(), sb);
+        serializeLights(berlinClockDevice.getBottomMinutesLights(), sb);
 
         return sb.toString().trim();
     }

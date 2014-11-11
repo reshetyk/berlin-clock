@@ -1,6 +1,6 @@
 package com.ubs.opsit.interviews.unittest.serializer;
 
-import com.ubs.opsit.interviews.domain.BerlinClock;
+import com.ubs.opsit.interviews.domain.BerlinClockDevice;
 import com.ubs.opsit.interviews.domain.BerlinClockLight;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializer;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializerImpl;
@@ -15,23 +15,23 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 
-public class BerlinClockSerializerTest {
+public class BerlinClockDeviceSerializerTest {
 
     private final static BerlinClockSerializer berlinClockSerializer = new BerlinClockSerializerImpl();
 
     @Test
     public void serializeAsStringEmptyBerlinClock() throws Exception {
-        BerlinClock emptyBerlinClock = new BerlinClock();
-        assertEquals("O\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(emptyBerlinClock));
+        BerlinClockDevice emptyBerlinClockDevice = new BerlinClockDevice();
+        assertEquals("O\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(emptyBerlinClockDevice));
 
     }
 
     @Test
     public void serializeAsStringSeconds() throws Exception {
-        BerlinClock secondLightOff = spy(new BerlinClock());
+        BerlinClockDevice secondLightOff = spy(new BerlinClockDevice());
         when(secondLightOff.getSecondLight()).thenReturn(new BerlinClockLight(State.OFF));
 
-        BerlinClock secondLightYellow = spy(new BerlinClock());
+        BerlinClockDevice secondLightYellow = spy(new BerlinClockDevice());
         when(secondLightYellow.getSecondLight()).thenReturn(new BerlinClockLight(State.YELLOW));
 
         //TODO: check only seconds
@@ -42,7 +42,7 @@ public class BerlinClockSerializerTest {
 
     @Test
     public void serializeAsStringTopHours() throws Exception {
-        BerlinClock topHoursLightAllRed = spy(new BerlinClock());
+        BerlinClockDevice topHoursLightAllRed = spy(new BerlinClockDevice());
         List<BerlinClockLight> berlinClockLights = Arrays.asList(new BerlinClockLight(State.RED),
                                                                  new BerlinClockLight(State.RED),
                                                                  new BerlinClockLight(State.RED),

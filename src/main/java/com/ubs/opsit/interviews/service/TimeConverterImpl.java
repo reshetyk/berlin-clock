@@ -1,27 +1,29 @@
 package com.ubs.opsit.interviews.service;
 
-import com.ubs.opsit.interviews.builder.BerlinClockDateBuilder;
-import com.ubs.opsit.interviews.builder.BerlinClockDateBuilderImpl;
-import com.ubs.opsit.interviews.domain.BerlinClock;
+import com.ubs.opsit.interviews.domain.BerlinTime;
+import com.ubs.opsit.interviews.driver.BerlinClockDriver;
+import com.ubs.opsit.interviews.driver.BerlinClockDriverImpl;
+import com.ubs.opsit.interviews.domain.BerlinClockDevice;
+import com.ubs.opsit.interviews.parser.DateParser;
+import com.ubs.opsit.interviews.parser.DateParserImpl;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializer;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializerImpl;
-import com.ubs.opsit.interviews.service.exception.TimeConverterException;
 import com.ubs.opsit.interviews.utils.Utils;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-import java.util.Date;
 
 public class TimeConverterImpl implements TimeConverter {
     private final String inputTimeFormat;
-    private final BerlinClockDateBuilder berlinClockDateBuilder;
+    private final BerlinClockDevice berlinClockDevice;
+    private final BerlinClockDriver berlinClockDriver;
     private final BerlinClockSerializer berlinClockSerializer;
+    private final DateParser dateParser;
 
-    public TimeConverterImpl(String inputTimeFormat, BerlinClockDateBuilder berlinClockDateBuilder, BerlinClockSerializer berlinClockSerializer) {
+
+    public TimeConverterImpl(String inputTimeFormat, BerlinClockDevice berlinClockDevice, BerlinClockDriver berlinClockDriver, BerlinClockSerializer berlinClockSerializer, DateParser dateParser) {
         this.inputTimeFormat = inputTimeFormat;
-        this.berlinClockDateBuilder = berlinClockDateBuilder;
+        this.berlinClockDevice = berlinClockDevice;
+        this.berlinClockDriver = berlinClockDriver;
         this.berlinClockSerializer = berlinClockSerializer;
+        this.dateParser = dateParser;
     }
 
     /**
@@ -33,34 +35,23 @@ public class TimeConverterImpl implements TimeConverter {
     public static TimeConverterImpl getDefaultInstance(){
         return new TimeConverterImpl(
                 Utils.getConfigProperty("inputTimeFormat"),
-                new BerlinClockDateBuilderImpl(),
-                new BerlinClockSerializerImpl()
+                new BerlinClockDevice(),
+                new BerlinClockDriverImpl(),
+                new BerlinClockSerializerImpl(),
+                new DateParserImpl()
         );
     }
 
     @Override
     public String convertTime(String sInputTime) {
-        final Date date = parseTime(sInputTime, inputTimeFormat);
-        final BerlinClock berlinClock = berlinClockDateBuilder.buildByDate(date);
+        final BerlinTime berlinTime = dateParser.parseAsBerlinTime(sInputTime, inputTimeFormat);
 
-        return berlinClockSerializer.serializeAsString(berlinClock);
+        berlinClockDriver.setTimeOnBerlinClockDevice(berlinClockDevice, berlinTime);
+
+        return berlinClockSerializer.serializeAsString(berlinClockDevice);
     }
 
-    protected static Date parseTime(String sTime, String format) throws TimeConverterException {
-        if (sTime == null || sTime.isEmpty()) {
-            throw new TimeConverterException("invalid parameter '" + sTime + "'");
-        }
-        DateTimeFormatter dateTimeFormatter;
-        DateTime dateTime;
-        try {
-            dateTimeFormatter = DateTimeFormat.forPattern(format);
-            dateTime = dateTimeFormatter.parseDateTime(sTime);
-        } catch (IllegalArgumentException ex) {
-            throw new TimeConverterException(ex);
-        }
 
-        return dateTime.toDate();
-    }
 
 
 }

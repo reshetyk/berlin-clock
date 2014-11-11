@@ -1,7 +1,7 @@
 package com.ubs.opsit.interviews.serializer;
 
-import com.ubs.opsit.interviews.domain.BerlinClock;
+import com.ubs.opsit.interviews.domain.BerlinClockDevice;
 
 public interface BerlinClockSerializer {
-    String serializeAsString(BerlinClock berlinClock);
+    String serializeAsString(BerlinClockDevice berlinClockDevice);
 }
