@@ -10,7 +10,7 @@ import com.ubs.opsit.interviews.serializer.BerlinClockSerializer;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializerImpl;
 import com.ubs.opsit.interviews.utils.ConfigUtils;
 
-public class TimeConverterImpl implements TimeConverter {
+public class StringRepresentationConverter implements TimeConverter {
     private final String inputTimeFormat;
     private final BerlinClockDevice berlinClockDevice;
     private final BerlinClockDriver berlinClockDriver;
@@ -18,7 +18,7 @@ public class TimeConverterImpl implements TimeConverter {
     private final TimeParser timeParser;
 
 
-    public TimeConverterImpl(String inputTimeFormat, BerlinClockDevice berlinClockDevice, BerlinClockDriver berlinClockDriver, BerlinClockSerializer berlinClockSerializer, TimeParser timeParser) {
+    public StringRepresentationConverter(String inputTimeFormat, BerlinClockDevice berlinClockDevice, BerlinClockDriver berlinClockDriver, BerlinClockSerializer berlinClockSerializer, TimeParser timeParser) {
         this.inputTimeFormat = inputTimeFormat;
         this.berlinClockDevice = berlinClockDevice;
         this.berlinClockDriver = berlinClockDriver;
@@ -32,9 +32,9 @@ public class TimeConverterImpl implements TimeConverter {
      * @return TimeConverterImpl
      */
     //TODO: maybe is not the best way, think about it
-    public static TimeConverterImpl getDefaultInstance() {
+    public static StringRepresentationConverter getDefaultInstance() {
         final BerlinClockDevice clockDevice = new BerlinClockDevice();
-        return new TimeConverterImpl(
+        return new StringRepresentationConverter(
                 ConfigUtils.getConfigProperty("inputTimeFormat"),
                 clockDevice,
                 new BerlinClockDriverImpl(clockDevice),

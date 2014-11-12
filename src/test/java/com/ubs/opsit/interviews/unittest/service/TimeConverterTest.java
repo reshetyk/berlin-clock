@@ -1,7 +1,7 @@
 package com.ubs.opsit.interviews.unittest.service;
 
+import com.ubs.opsit.interviews.service.StringRepresentationConverter;
 import com.ubs.opsit.interviews.service.TimeConverter;
-import com.ubs.opsit.interviews.service.TimeConverterImpl;
 import com.ubs.opsit.interviews.service.exception.TimeConverterException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +13,7 @@ public class TimeConverterTest {
 
     @Before
     public void setUp() throws Exception {
-        timeConverter = TimeConverterImpl.getDefaultInstance();
+        timeConverter = StringRepresentationConverter.getDefaultInstance();
     }
 
     @Test(expected = TimeConverterException.class)
