@@ -36,7 +36,7 @@ public class BerlinClockSerializerImpl implements BerlinClockSerializer {
         for (BerlinClockLight light : lights) {
             sb.append(representState(light.getState()));
         }
-        sb.append('\n');
+        sb.append('\n');//TODO: must not be hardcoded
     }
 
     protected String representState(BerlinClockLight.State state) {
