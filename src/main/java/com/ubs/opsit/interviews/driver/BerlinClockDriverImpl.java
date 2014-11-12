@@ -7,17 +7,28 @@ import static com.ubs.opsit.interviews.domain.BerlinClockLight.State;
 
 public class BerlinClockDriverImpl implements BerlinClockDriver {
 
-    @Override
-    public void setTimeOnBerlinClockDevice(BerlinClockDevice berlinClockDevice, BerlinTime berlinTime) {
-        resetClock(berlinClockDevice);
-        setUpSecondLight(berlinTime, berlinClockDevice);
-        setUpTopHoursLights(berlinTime, berlinClockDevice);
-        setUpBottomHoursLights(berlinTime, berlinClockDevice);
-        setUpTopMinutesLights(berlinTime, berlinClockDevice);
-        setUpBottomMinutesLights(berlinTime, berlinClockDevice);
+    private BerlinClockDevice berlinClockDevice;
+
+    public BerlinClockDriverImpl(BerlinClockDevice berlinClockDevice) {
+        setupDevice(berlinClockDevice);
     }
 
-    protected static void resetClock(BerlinClockDevice berlinClockDevice) {
+    @Override
+    public void setupDevice(BerlinClockDevice berlinClockDevice) {
+        this.berlinClockDevice = berlinClockDevice;
+    }
+
+    @Override
+    public void setTime(BerlinTime berlinTime) {
+        resetClock();
+        setSecondLight(berlinTime);
+        setTopHoursLights(berlinTime);
+        setBottomHoursLights(berlinTime);
+        setTopMinutesLights(berlinTime);
+        setBottomMinutesLights(berlinTime);
+    }
+
+    protected void resetClock() {
         berlinClockDevice.setStateSecondLight(State.OFF);
         //TODO: find the way to do it easier
         for (int i = 0; berlinClockDevice.getTopHoursLights().size() > i; i++) {
@@ -35,7 +46,7 @@ public class BerlinClockDriverImpl implements BerlinClockDriver {
 
     }
 
-    protected static void setUpSecondLight(BerlinTime berlinTime, BerlinClockDevice berlinClockDevice) {
+    protected void setSecondLight(BerlinTime berlinTime) {
         if (berlinTime.getSeconds() % 2 == 0) {
             berlinClockDevice.setStateSecondLight(State.YELLOW);
         } else {
@@ -43,25 +54,25 @@ public class BerlinClockDriverImpl implements BerlinClockDriver {
         }
     }
 
-    protected static void setUpTopHoursLights(BerlinTime berlinTime, BerlinClockDevice berlinClockDevice) {
+    protected void setTopHoursLights(BerlinTime berlinTime) {
         for (int i = 0; i < countEnabledTopLights(berlinTime.getHours()); i++) {
             berlinClockDevice.setStateTopHourLightByIndex(i, State.RED);
         }
     }
 
-    protected static void setUpBottomHoursLights(BerlinTime berlinTime, BerlinClockDevice berlinClockDevice) {
+    protected void setBottomHoursLights(BerlinTime berlinTime) {
         for (int i = 0; i < countEnabledBottomLights(berlinTime.getHours()); i++) {
             berlinClockDevice.setStateBottomHoursLightsByIndex(i, State.RED);
         }
     }
 
-    protected static void setUpTopMinutesLights(BerlinTime berlinTime, BerlinClockDevice berlinClockDevice) {
+    protected void setTopMinutesLights(BerlinTime berlinTime) {
         for (int i = 0; i < countEnabledTopLights(berlinTime.getMinutes()); i++) {
             berlinClockDevice.setStateTopMinutesLightByIndex(i, (i + 1) % 3 == 0 ? State.RED : State.YELLOW);
         }
     }
 
-    protected static void setUpBottomMinutesLights(BerlinTime berlinTime, BerlinClockDevice berlinClockDevice) {
+    protected void setBottomMinutesLights(BerlinTime berlinTime) {
         for (int i = 0; i < countEnabledBottomLights(berlinTime.getMinutes()); i++) {
             berlinClockDevice.setStateBottomMinutesLightByIndex(i, State.YELLOW);
         }

@@ -60,17 +60,6 @@ public class BerlinClockDevice {
         return Collections.unmodifiableList(Arrays.asList(bottomMinutesLights));
     }
 
-    @Override
-    public String toString() {
-        return "BerlinClock{" +
-                "secondLight=" + secondLight +
-                ", topHoursLights=" + Arrays.toString(topHoursLights) +
-                ", bottomHoursLights=" + Arrays.toString(bottomHoursLights) +
-                ", topMinutesLights=" + Arrays.toString(topMinutesLights) +
-                ", bottomMinutesLights=" + Arrays.toString(bottomMinutesLights) +
-                '}';
-    }
-
     private static BerlinClockLight[] createAndInitLights(int size, State state) {
         final BerlinClockLight[] result = new BerlinClockLight[size];
         for (int i = 0; i < result.length; i++) {

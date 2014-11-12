@@ -5,6 +5,8 @@ import com.ubs.opsit.interviews.domain.BerlinTime;
 
 public interface BerlinClockDriver {
 
-    void setTimeOnBerlinClockDevice(BerlinClockDevice berlinClockDevice, BerlinTime berlinTime);
+    void setupDevice(BerlinClockDevice berlinClockDevice);
+
+    void setTime(BerlinTime berlinTime);
 
 }

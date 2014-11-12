@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.ubs.opsit.interviews.domain.BerlinClockDevice;
 import com.ubs.opsit.interviews.domain.BerlinClockLight;
 import com.ubs.opsit.interviews.driver.BerlinClockDriverImpl;
-import com.ubs.opsit.interviews.parser.DateParser;
-import com.ubs.opsit.interviews.parser.DateParserImpl;
+import com.ubs.opsit.interviews.parser.TimeParser;
+import com.ubs.opsit.interviews.parser.TimeParserImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,14 +20,14 @@ public class BerlinClockDriverTest {
     final static String FORMAT_INPUT_TIME = "HH:mm:ss";
 
     BerlinClockDriverImpl driver;
-    DateParser dateParser;
+    TimeParser timeParser;
     BerlinClockDevice clockDevice;
 
     @Before
     public void setUp() throws Exception {
         clockDevice = new BerlinClockDevice();
-        driver = new BerlinClockDriverImpl();
-        dateParser = new DateParserImpl();
+        driver = new BerlinClockDriverImpl(clockDevice);
+        timeParser = new TimeParserImpl();
     }
 
     /**
@@ -241,6 +241,6 @@ public class BerlinClockDriverTest {
     }
 
     private void setBerlinClockTime(String sDate) {
-        driver.setTimeOnBerlinClockDevice(clockDevice, dateParser.parseAsBerlinTime(sDate, FORMAT_INPUT_TIME));
+        driver.setTime(timeParser.parseAsBerlinTime(sDate, FORMAT_INPUT_TIME));
     }
 }

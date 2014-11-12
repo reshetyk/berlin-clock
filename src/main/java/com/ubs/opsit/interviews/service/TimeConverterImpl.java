@@ -1,29 +1,29 @@
 package com.ubs.opsit.interviews.service;
 
+import com.ubs.opsit.interviews.domain.BerlinClockDevice;
 import com.ubs.opsit.interviews.domain.BerlinTime;
 import com.ubs.opsit.interviews.driver.BerlinClockDriver;
 import com.ubs.opsit.interviews.driver.BerlinClockDriverImpl;
-import com.ubs.opsit.interviews.domain.BerlinClockDevice;
-import com.ubs.opsit.interviews.parser.DateParser;
-import com.ubs.opsit.interviews.parser.DateParserImpl;
+import com.ubs.opsit.interviews.parser.TimeParser;
+import com.ubs.opsit.interviews.parser.TimeParserImpl;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializer;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializerImpl;
-import com.ubs.opsit.interviews.utils.Utils;
+import com.ubs.opsit.interviews.utils.ConfigUtils;
 
 public class TimeConverterImpl implements TimeConverter {
     private final String inputTimeFormat;
     private final BerlinClockDevice berlinClockDevice;
     private final BerlinClockDriver berlinClockDriver;
     private final BerlinClockSerializer berlinClockSerializer;
-    private final DateParser dateParser;
+    private final TimeParser timeParser;
 
 
-    public TimeConverterImpl(String inputTimeFormat, BerlinClockDevice berlinClockDevice, BerlinClockDriver berlinClockDriver, BerlinClockSerializer berlinClockSerializer, DateParser dateParser) {
+    public TimeConverterImpl(String inputTimeFormat, BerlinClockDevice berlinClockDevice, BerlinClockDriver berlinClockDriver, BerlinClockSerializer berlinClockSerializer, TimeParser timeParser) {
         this.inputTimeFormat = inputTimeFormat;
         this.berlinClockDevice = berlinClockDevice;
         this.berlinClockDriver = berlinClockDriver;
         this.berlinClockSerializer = berlinClockSerializer;
-        this.dateParser = dateParser;
+        this.timeParser = timeParser;
     }
 
     /**
@@ -32,26 +32,25 @@ public class TimeConverterImpl implements TimeConverter {
      * @return TimeConverterImpl
      */
     //TODO: maybe is not the best way, think about it
-    public static TimeConverterImpl getDefaultInstance(){
+    public static TimeConverterImpl getDefaultInstance() {
+        final BerlinClockDevice clockDevice = new BerlinClockDevice();
         return new TimeConverterImpl(
-                Utils.getConfigProperty("inputTimeFormat"),
-                new BerlinClockDevice(),
-                new BerlinClockDriverImpl(),
+                ConfigUtils.getConfigProperty("inputTimeFormat"),
+                clockDevice,
+                new BerlinClockDriverImpl(clockDevice),
                 new BerlinClockSerializerImpl(),
-                new DateParserImpl()
+                new TimeParserImpl()
         );
     }
 
     @Override
     public String convertTime(String sInputTime) {
-        final BerlinTime berlinTime = dateParser.parseAsBerlinTime(sInputTime, inputTimeFormat);
+        final BerlinTime berlinTime = timeParser.parseAsBerlinTime(sInputTime, inputTimeFormat);
 
-        berlinClockDriver.setTimeOnBerlinClockDevice(berlinClockDevice, berlinTime);
+        berlinClockDriver.setTime(berlinTime);
 
         return berlinClockSerializer.serializeAsString(berlinClockDevice);
     }
-
-
 
 
 }

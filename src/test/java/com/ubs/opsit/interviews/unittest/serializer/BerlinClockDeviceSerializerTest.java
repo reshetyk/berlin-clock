@@ -4,6 +4,7 @@ import com.ubs.opsit.interviews.domain.BerlinClockDevice;
 import com.ubs.opsit.interviews.domain.BerlinClockLight;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializer;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializerImpl;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -17,7 +18,12 @@ import static org.mockito.Mockito.when;
 
 public class BerlinClockDeviceSerializerTest {
 
-    private final static BerlinClockSerializer berlinClockSerializer = new BerlinClockSerializerImpl();
+    BerlinClockSerializer berlinClockSerializer;
+
+    @Before
+    public void setUp() throws Exception {
+        berlinClockSerializer = new BerlinClockSerializerImpl();
+    }
 
     @Test
     public void serializeAsStringEmptyBerlinClock() throws Exception {

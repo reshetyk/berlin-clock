@@ -4,25 +4,31 @@ import com.ubs.opsit.interviews.service.TimeConverter;
 import com.ubs.opsit.interviews.service.TimeConverterImpl;
 import com.ubs.opsit.interviews.service.exception.TimeConverterException;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class TimeConverterTest {
 
-    static final TimeConverter TIME_CONVERTER = TimeConverterImpl.getDefaultInstance();
+   TimeConverter timeConverter;
+
+    @Before
+    public void setUp() throws Exception {
+        timeConverter = TimeConverterImpl.getDefaultInstance();
+    }
 
     @Test(expected = TimeConverterException.class)
     public void convertTimeInputParameterNull() throws Exception {
-        TIME_CONVERTER.convertTime(null);
+        timeConverter.convertTime(null);
     }
 
     @Test(expected = TimeConverterException.class)
     public void convertTimeInputParameterEmptyString() throws Exception {
-        TIME_CONVERTER.convertTime("");
+        timeConverter.convertTime("");
     }
 
     @Test(expected = TimeConverterException.class)
     public void convertTimeInputParameterInvalidString() throws Exception {
-        TIME_CONVERTER.convertTime("0dds");
+        timeConverter.convertTime("0dds");
     }
 
     @Test
@@ -30,22 +36,22 @@ public class TimeConverterTest {
 
         Assert.assertEquals(
                 "Y\n" + "OOOO\n" + "OOOO\n" + "OOOOOOOOOOO\n" + "OOOO",
-                TIME_CONVERTER.convertTime("00:00:00")
+                timeConverter.convertTime("00:00:00")
         );
 
         Assert.assertEquals(
                 "O\n" + "RRRO\n" + "OOOO\n" + "YYOOOOOOOOO\n" + "YYYY",
-                TIME_CONVERTER.convertTime("15:14:05")
+                timeConverter.convertTime("15:14:05")
         );
 
         Assert.assertEquals(
                 "O\n" + "RRRR\n" + "RRRO\n" + "YYRYYRYYRYY\n" + "YYYY",
-                TIME_CONVERTER.convertTime("23:59:59")
+                timeConverter.convertTime("23:59:59")
         );
 
         Assert.assertEquals(
                 "O\n" + "RRRR\n" + "RROO\n" + "YYOOOOOOOOO\n" + "YOOO",
-                TIME_CONVERTER.convertTime("22:11:11")
+                timeConverter.convertTime("22:11:11")
         );
     }
 }

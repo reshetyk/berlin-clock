@@ -2,7 +2,7 @@ package com.ubs.opsit.interviews.serializer;
 
 import com.ubs.opsit.interviews.domain.BerlinClockDevice;
 import com.ubs.opsit.interviews.domain.BerlinClockLight;
-import com.ubs.opsit.interviews.utils.Utils;
+import com.ubs.opsit.interviews.utils.ConfigUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,7 @@ public class BerlinClockSerializerImpl implements BerlinClockSerializer {
     private Map<BerlinClockLight.State, String> representationMap;
 
     public BerlinClockSerializerImpl() {
-        this.representationMap = Utils.buildRepresentationMap();
+        this.representationMap = ConfigUtils.buildRepresentationMap();
     }
 
     public BerlinClockSerializerImpl(Map<BerlinClockLight.State, String> representationMap) {

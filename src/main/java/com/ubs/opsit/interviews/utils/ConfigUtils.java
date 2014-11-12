@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class Utils {
+//TODO: maybe make Config singleton class
+public class ConfigUtils {
 
-    //TODO: maybe make Config singleton class
     public static String getConfigProperty(String propertyName) {
         Properties properties = new Properties();
         try {
