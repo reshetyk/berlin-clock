@@ -94,6 +94,7 @@ public final class BehaviouralTestEmbedder extends ConfigurableEmbedder {
             withDefaultFormats();
             withFormats(HTML, CONSOLE);
             withFailureTrace(true);
+            withPathResolver(new FilePrintStreamFactory.ResolveToSimpleName());
         }
     }
 }

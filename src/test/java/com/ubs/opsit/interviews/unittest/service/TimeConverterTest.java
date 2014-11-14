@@ -9,7 +9,8 @@ import org.junit.Test;
 
 public class TimeConverterTest {
 
-   TimeConverter timeConverter;
+    private static final String SEPARATOR = "\n\r";
+    TimeConverter timeConverter;
 
     @Before
     public void setUp() throws Exception {
@@ -35,22 +36,22 @@ public class TimeConverterTest {
     public void convertTime() throws Exception {
 
         Assert.assertEquals(
-                "Y\n" + "OOOO\n" + "OOOO\n" + "OOOOOOOOOOO\n" + "OOOO",
+                "Y" + SEPARATOR + "OOOO" + SEPARATOR + "OOOO" + SEPARATOR + "OOOOOOOOOOO" + SEPARATOR + "OOOO",
                 timeConverter.convertTime("00:00:00")
         );
 
         Assert.assertEquals(
-                "O\n" + "RRRO\n" + "OOOO\n" + "YYOOOOOOOOO\n" + "YYYY",
+                "O" + SEPARATOR + "RRRO" + SEPARATOR + "OOOO" + SEPARATOR + "YYOOOOOOOOO" + SEPARATOR + "YYYY",
                 timeConverter.convertTime("15:14:05")
         );
 
         Assert.assertEquals(
-                "O\n" + "RRRR\n" + "RRRO\n" + "YYRYYRYYRYY\n" + "YYYY",
+                "O" + SEPARATOR + "RRRR" + SEPARATOR + "RRRO" + SEPARATOR + "YYRYYRYYRYY" + SEPARATOR + "YYYY",
                 timeConverter.convertTime("23:59:59")
         );
 
         Assert.assertEquals(
-                "O\n" + "RRRR\n" + "RROO\n" + "YYOOOOOOOOO\n" + "YOOO",
+                "O" + SEPARATOR + "RRRR" + SEPARATOR + "RROO" + SEPARATOR + "YYOOOOOOOOO" + SEPARATOR + "YOOO",
                 timeConverter.convertTime("22:11:11")
         );
     }

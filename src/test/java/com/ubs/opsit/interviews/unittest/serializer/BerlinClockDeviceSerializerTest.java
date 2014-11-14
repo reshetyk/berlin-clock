@@ -4,6 +4,7 @@ import com.ubs.opsit.interviews.domain.BerlinClockDevice;
 import com.ubs.opsit.interviews.domain.BerlinClockLight;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializer;
 import com.ubs.opsit.interviews.serializer.BerlinClockSerializerImpl;
+import com.ubs.opsit.interviews.utils.ConfigUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class BerlinClockDeviceSerializerTest {
 
     @Before
     public void setUp() throws Exception {
-        berlinClockSerializer = new BerlinClockSerializerImpl();
+        berlinClockSerializer = new BerlinClockSerializerImpl(ConfigUtils.buildRepresentationMap(), "\n");
     }
 
     @Test
@@ -50,9 +51,9 @@ public class BerlinClockDeviceSerializerTest {
     public void serializeAsStringTopHours() throws Exception {
         BerlinClockDevice topHoursLightAllRed = spy(new BerlinClockDevice());
         List<BerlinClockLight> berlinClockLights = Arrays.asList(new BerlinClockLight(State.RED),
-                                                                 new BerlinClockLight(State.RED),
-                                                                 new BerlinClockLight(State.RED),
-                                                                 new BerlinClockLight(State.RED));
+                new BerlinClockLight(State.RED),
+                new BerlinClockLight(State.RED),
+                new BerlinClockLight(State.RED));
 
         when(topHoursLightAllRed.getTopHoursLights()).thenReturn(berlinClockLights);
 

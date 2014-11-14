@@ -11,13 +11,16 @@ import java.util.Map;
 public class BerlinClockSerializerImpl implements BerlinClockSerializer {
 
     private Map<BerlinClockLight.State, String> representationMap;
+    private String separator;
 
     public BerlinClockSerializerImpl() {
         this.representationMap = ConfigUtils.buildRepresentationMap();
+        this.separator =  "\r\n";
     }
 
-    public BerlinClockSerializerImpl(Map<BerlinClockLight.State, String> representationMap) {
+    public BerlinClockSerializerImpl(Map<BerlinClockLight.State, String> representationMap, String separator) {
         this.representationMap = representationMap;
+        this.separator = separator;
     }
 
     @Override
@@ -36,7 +39,7 @@ public class BerlinClockSerializerImpl implements BerlinClockSerializer {
         for (BerlinClockLight light : lights) {
             sb.append(representState(light.getState()));
         }
-        sb.append('\n');//TODO: must not be hardcoded
+        sb.append(separator);
     }
 
     protected String representState(BerlinClockLight.State state) {
@@ -44,7 +47,15 @@ public class BerlinClockSerializerImpl implements BerlinClockSerializer {
         if (representation == null) {
             throw new RuntimeException("Cannot represent state " + state.name());
         }
-        return representation ;
+        return representation;
+    }
+
+    public void setRepresentationMap(Map<BerlinClockLight.State, String> representationMap) {
+        this.representationMap = representationMap;
+    }
+
+    public void setSeparator(String separator) {
+        this.separator = separator;
     }
 
 }
