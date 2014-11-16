@@ -22,7 +22,6 @@ public class TimeParserImpl implements TimeParser {
     }
 
     protected BerlinTime parseAndValidateBySpecialFormat(String sTime, String format) {
-        final String errMsg = "Can't parse time '" + sTime + "' by format '" + format + "'";
         int hours, mins , secs;
         try {
             final String[] splitTime = sTime.split(":");
@@ -30,10 +29,10 @@ public class TimeParserImpl implements TimeParser {
             mins = Integer.parseInt(splitTime[1]);
             secs = Integer.parseInt(splitTime[2]);
             if (hours > 24 || hours < 0 || mins > 60 || mins < 0 || secs > 60 || secs < 0) {
-                throw new TimeParserException(errMsg + "; incorrect ranges");
+                throw new TimeParserException("Incorrect ranges");
             }
         } catch (Exception ex) {
-            throw new TimeParserException(errMsg, ex);
+            throw new TimeParserException("Can't parse time '" + sTime + "' by format '" + format + "'", ex);
         }
         return new BerlinTime(secs, mins, hours);
     }
