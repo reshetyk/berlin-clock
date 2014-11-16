@@ -17,11 +17,11 @@ import static org.junit.Assert.assertEquals;
 
 public class BerlinClockDriverTest {
 
-    final static String FORMAT_INPUT_TIME = "HH:mm:ss";
+    private final static String FORMAT_INPUT_TIME = "HH:mm:ss";
 
-    BerlinClockDriverImpl driver;
-    TimeParser timeParser;
-    BerlinClockDevice clockDevice;
+    private BerlinClockDriverImpl driver;
+    private TimeParser timeParser;
+    private BerlinClockDevice clockDevice;
 
     @Before
     public void setUp() throws Exception {

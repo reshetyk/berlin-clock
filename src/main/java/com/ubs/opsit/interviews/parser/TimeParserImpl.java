@@ -23,7 +23,7 @@ public class TimeParserImpl implements TimeParser {
 
     protected BerlinTime parseAndValidateBySpecialFormat(String sTime, String format) {
         final String errMsg = "Can't parse time '" + sTime + "' by format '" + format + "'";
-        int hours = 0, mins = 0, secs = 0;
+        int hours, mins , secs;
         try {
             final String[] splitTime = sTime.split(":");
             hours = Integer.parseInt(splitTime[0]);

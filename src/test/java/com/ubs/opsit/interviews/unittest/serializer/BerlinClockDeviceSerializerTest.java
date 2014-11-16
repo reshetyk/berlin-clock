@@ -19,8 +19,8 @@ import static org.mockito.Mockito.when;
 
 public class BerlinClockDeviceSerializerTest {
 
-    public static final String SEPARATOR = "\n";
-    BerlinClockSerializer berlinClockSerializer;
+    private static final String SEPARATOR = "\n";
+    private BerlinClockSerializer berlinClockSerializer;
 
     @Before
     public void setUp() throws Exception {

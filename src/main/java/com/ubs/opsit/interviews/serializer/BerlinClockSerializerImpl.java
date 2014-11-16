@@ -28,14 +28,14 @@ public class BerlinClockSerializerImpl implements BerlinClockSerializer {
         return sb.toString().trim();
     }
 
-    protected void serializeLights(List<BerlinClockLight> lights, StringBuilder sb) {
+    private void serializeLights(List<BerlinClockLight> lights, StringBuilder sb) {
         for (BerlinClockLight light : lights) {
             sb.append(representState(light.getState()));
         }
         sb.append(separator);
     }
 
-    protected String representState(BerlinClockLight.State state) {
+    private String representState(BerlinClockLight.State state) {
         final String representation = representationMap.get(state);
         if (representation == null) {
             throw new RuntimeException("Cannot represent state " + state.name());
