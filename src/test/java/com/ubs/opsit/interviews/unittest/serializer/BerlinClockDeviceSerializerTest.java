@@ -19,18 +19,19 @@ import static org.mockito.Mockito.when;
 
 public class BerlinClockDeviceSerializerTest {
 
+    public static final String SEPARATOR = "\n";
     BerlinClockSerializer berlinClockSerializer;
 
     @Before
     public void setUp() throws Exception {
-        berlinClockSerializer = new BerlinClockSerializerImpl(ConfigUtils.buildRepresentationMap(), "\n");
+        berlinClockSerializer = new BerlinClockSerializerImpl(ConfigUtils.buildRepresentationMap(), SEPARATOR);
     }
 
     @Test
     public void serializeAsStringEmptyBerlinClock() throws Exception {
         BerlinClockDevice emptyBerlinClockDevice = new BerlinClockDevice();
-        assertEquals("O\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(emptyBerlinClockDevice));
-
+        assertEquals("O" + SEPARATOR + "OOOO" + SEPARATOR + "OOOO" + SEPARATOR + "OOOOOOOOOOO" + SEPARATOR + "OOOO",
+                berlinClockSerializer.serializeAsString(emptyBerlinClockDevice));
     }
 
     @Test
@@ -42,8 +43,11 @@ public class BerlinClockDeviceSerializerTest {
         when(secondLightYellow.getSecondLight()).thenReturn(new BerlinClockLight(State.YELLOW));
 
         //TODO: check only seconds
-        assertEquals("O\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(secondLightOff));
-        assertEquals("Y\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(secondLightYellow));
+        assertEquals("O" + SEPARATOR + "OOOO" + SEPARATOR + "OOOO" + SEPARATOR + "OOOOOOOOOOO" + SEPARATOR + "OOOO",
+                berlinClockSerializer.serializeAsString(secondLightOff));
+
+        assertEquals("Y" + SEPARATOR + "OOOO" + SEPARATOR + "OOOO" + SEPARATOR + "OOOOOOOOOOO" + SEPARATOR + "OOOO",
+                berlinClockSerializer.serializeAsString(secondLightYellow));
 
     }
 
@@ -58,11 +62,12 @@ public class BerlinClockDeviceSerializerTest {
         when(topHoursLightAllRed.getTopHoursLights()).thenReturn(berlinClockLights);
 
         //TODO: check only top hours
-        assertEquals("O\nRRRR\nOOOO\nOOOOOOOOOOO\nOOOO", berlinClockSerializer.serializeAsString(topHoursLightAllRed));
+        assertEquals("O" + SEPARATOR + "RRRR" + SEPARATOR + "OOOO" + SEPARATOR + "OOOOOOOOOOO" + SEPARATOR + "OOOO",
+                berlinClockSerializer.serializeAsString(topHoursLightAllRed));
 
     }
 
-    //...
+    //serializeAsStringBottomHours() and so on... TODO: complete me
 
 
 }

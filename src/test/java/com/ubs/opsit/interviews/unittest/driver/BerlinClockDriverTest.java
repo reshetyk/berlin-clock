@@ -229,8 +229,8 @@ public class BerlinClockDriverTest {
     //TODO: maybe extract functions below to TestUtils or TestHelper class
     private static List<BerlinClockLight> makeLightsByEnum(BerlinClockLight.State... states) {
         final List<BerlinClockLight> result = new ArrayList<>(states.length);
-        for (int i = 0; i < states.length; i++) {
-            result.add(new BerlinClockLight(states[i]));
+        for (BerlinClockLight.State state : states) {
+            result.add(new BerlinClockLight(state));
         }
         return result;
     }

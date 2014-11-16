@@ -11,6 +11,7 @@ import com.ubs.opsit.interviews.serializer.BerlinClockSerializerImpl;
 import com.ubs.opsit.interviews.utils.ConfigUtils;
 
 public class StringRepresentationConverter implements TimeConverter {
+    public static final String SEPARATOR = "\r\n";
     private final String inputTimeFormat;
     private final BerlinClockDevice berlinClockDevice;
     private final BerlinClockDriver berlinClockDriver;
@@ -38,7 +39,7 @@ public class StringRepresentationConverter implements TimeConverter {
                 ConfigUtils.getConfigProperty("inputTimeFormat"),
                 clockDevice,
                 new BerlinClockDriverImpl(clockDevice),
-                new BerlinClockSerializerImpl(),
+                new BerlinClockSerializerImpl(ConfigUtils.buildRepresentationMap(), SEPARATOR),
                 new TimeParserImpl()
         );
     }
@@ -51,6 +52,4 @@ public class StringRepresentationConverter implements TimeConverter {
 
         return berlinClockSerializer.serializeAsString(berlinClockDevice);
     }
-
-
 }
