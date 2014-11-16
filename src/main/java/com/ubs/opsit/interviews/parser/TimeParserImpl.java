@@ -16,7 +16,7 @@ public class TimeParserImpl implements TimeParser {
         if ("ZZ:mm:ss".equals(format)) {
             return parseAndValidateBySpecialFormat(sTime, format);
         } else {
-            return parseAndValidateByUsualFormat(sTime, format);
+            return parseAndValidateByStandardFormat(sTime, format);
         }
 
     }
@@ -38,7 +38,7 @@ public class TimeParserImpl implements TimeParser {
         return new BerlinTime(secs, mins, hours);
     }
 
-    protected BerlinTime parseAndValidateByUsualFormat(String sTime, String format) {
+    protected BerlinTime parseAndValidateByStandardFormat(String sTime, String format) {
 
         DateTimeFormatter dateTimeFormatter;
         DateTime dateTime;
